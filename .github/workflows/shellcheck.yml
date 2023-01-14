@@ -34,10 +34,11 @@ jobs:
           use-tool-cache: true
 
       - name: Run shellcheck
-        uses: oseki-guy/action-shellcheck@output_file
+        uses: oseki-guy/action-shellcheck@no_exit
         with:
           format: json
           output_file: shellcheck-results.json
+          no_exit: true
 
       - name: Convert shellcheck results to SARIF
         run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
