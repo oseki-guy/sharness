@@ -37,8 +37,7 @@ jobs:
         run: cargo install shellcheck-fmt
 
       - name: Run shellcheck
-        id: shellcheck
-        uses: github.com/oseki-guy/action-shellcheck@output_file
+        uses: oseki-guy/action-shellcheck@output_file
         with:
           format: json
           output_file: shellcheck-results.json
