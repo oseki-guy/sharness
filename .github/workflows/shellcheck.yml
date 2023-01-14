@@ -27,10 +27,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install shellcheck-fmt
+      - name: Install shellcheck-sarif
         uses: actions-rs/install@9da1d2adcfe5e7c16992e8242ca33a56b6d9b101 #@v0.1.2
         with:
-          crate: shellcheck-fmt
+          crate: shellcheck-sarif
           use-tool-cache: true
 
       - name: Run shellcheck
@@ -40,7 +40,7 @@ jobs:
           output_file: shellcheck-results.json
 
       - name: Convert shellcheck results to SARIF
-        run: shellcheck-fmt < shellcheck-results.json > shellcheck-results.sarif
+        run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
