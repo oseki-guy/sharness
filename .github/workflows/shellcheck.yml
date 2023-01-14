@@ -34,7 +34,7 @@ jobs:
           use-tool-cache: true
 
       - name: Run shellcheck
-        uses: oseki-guy/action-shellcheck@no_exit
+        uses: oseki-guy/action-shellcheck@no-exit
         with:
           format: json
           output_file: shellcheck-results.json
