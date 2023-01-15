@@ -14,11 +14,17 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "master" ]
+    
+
+
 
 jobs:
   shellcheck-analyze:
     name: Run shellcheck analysis
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     permissions:
       contents: read
       security-events: write
