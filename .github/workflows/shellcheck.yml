@@ -39,6 +39,7 @@ jobs:
           format: json
           output_file: shellcheck-results.json
           no_exit: true
+          check_together: 'yes'
 
       - name: Convert shellcheck results to SARIF
         run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
