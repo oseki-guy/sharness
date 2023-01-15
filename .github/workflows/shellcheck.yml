@@ -43,6 +43,11 @@ jobs:
       - name: Convert shellcheck results to SARIF
         run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
         continue-on-error: true
+        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: shellcheck-results
+          path: shellcheck-results.*
 
       - name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v1
