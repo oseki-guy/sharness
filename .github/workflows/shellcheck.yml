@@ -3,7 +3,6 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 # shellcheck is an analysis tool to find bugs and inconsistencies in your shell scripts.
-# mistakes in your Rust code and help improve your Rust code.
 # More details at https://www.shellcheck.net/
 
 name: shellcheck analysis
@@ -49,10 +48,6 @@ jobs:
 
       - name: Convert shellcheck results to SARIF
         run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
-        continue-on-error: true
-        
-      - name: Add uriBaseId fields
-        run: "jq --arg val %SRCROOT% '.runs[].results[].locations[].physicalLocation.artifactLocation += {uriBaseId: $val}' shellcheck-results.sarif > shellcheck-results.pretty.sarif"
         continue-on-error: true
         
       - name: Trim uri field
