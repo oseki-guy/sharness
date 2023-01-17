@@ -55,6 +55,10 @@ jobs:
         run: "jq --arg val %SRCROOT% '.runs[].results[].locations[].physicalLocation.artifactLocation += {uriBaseId: $val}' shellcheck-results.sarif > shellcheck-results.pretty.sarif"
         continue-on-error: true
         
+      - name: Trim uri field
+        run: "jq '.runs[].results[].locations[].physicalLocation.artifactLocation.uri | sub(\"./\"; \"\")' shellcheck-results.sarif > shellcheck-results.pretty.sarif"
+        continue-on-error: true
+        
       - uses: actions/upload-artifact@v3
         with:
           name: shellcheck-results
