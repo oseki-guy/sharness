@@ -45,7 +45,7 @@ jobs:
           output_file: shellcheck-results.json
           no_exit: true
           # Supported severity levels are 'error', 'warning', 'info' and 'style'
-          severity: 'error'
+          severity: 'warning'
 
       - name: Convert shellcheck results to SARIF
         run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
