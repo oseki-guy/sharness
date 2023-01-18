@@ -44,7 +44,6 @@ jobs:
           format: json
           output_file: shellcheck-results.json
           no_exit: true
-          check_together: 'yes'
           # Supported severity levels are 'error', 'warning', 'info' and 'style'
           severity: 'error'
 
