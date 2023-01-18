@@ -45,7 +45,9 @@ jobs:
           name: Differential ShellCheck SARIF
           path: ${{ steps.ShellCheck.outputs.sarif }}
 
-      - name: Upload analysis results to GitHub
+
+      - if: ${{ always() }}
+        name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: ${{ steps.shellcheck.outputs.sarif }}
