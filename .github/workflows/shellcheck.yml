@@ -13,9 +13,6 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "master" ]
-    
-
-
 
 jobs:
   shellcheck-analyze:
@@ -31,38 +28,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install shellcheck-sarif
-        uses: actions-rs/install@9da1d2adcfe5e7c16992e8242ca33a56b6d9b101 #@v0.1.2
         with:
-          crate: shellcheck-sarif
-          use-tool-cache: true
+          fetch-depth: 0
 
-      - name: Run shellcheck
-        uses: oseki-guy/action-shellcheck@no-exit
+      - name: Run differential shellcheck
+        id: shellcheck
+        uses: redhat-plumbers-in-action/differential-shellcheck@v3
+        # with:
+        # token: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: ${{ always() }}
+        name: Upload artifact with ShellCheck defects in SARIF format
+        uses: actions/upload-artifact@v3
         with:
-          format: json
-          output_file: shellcheck-results.json
-          no_exit: true
-          check_together: 'yes'
-          # Supported severity levels are 'error', 'warning', 'info' and 'style'
-          severity: 'style'
+          name: Differential ShellCheck SARIF
+          path: ${{ steps.ShellCheck.outputs.sarif }}
 
-      - name: Convert shellcheck results to SARIF
-        run: shellcheck-sarif < shellcheck-results.json > shellcheck-results.sarif
-        continue-on-error: true
-        
-      - name: Trim uri field
-        run: "jq '.runs[].results[].locations[].physicalLocation.artifactLocation.uri |= sub(\"^./\"; \"\")' shellcheck-results.sarif > shellcheck-results.pretty.sarif"
-        continue-on-error: true
-        
-      - uses: actions/upload-artifact@v3
-        with:
-          name: shellcheck-results
-          path: shellcheck-results.*
-
-      - name: Upload analysis results to GitHub
+      - if: ${{ always() }}
+        name: Upload analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: shellcheck-results.pretty.sarif
+          sarif_file: ${{ steps.shellcheck.outputs.sarif }}
           wait-for-processing: true
