@@ -2,7 +2,7 @@
 
 Sharness is a portable shell library to write, run, and analyze automated tests
 for Unix programs. Since all tests output TAP, the [Test Anything Protocol],
-they can be run with any TAP harness.
+they can be run with any TAP harness. 
 
 Each test is written as a shell script, for example:
 
