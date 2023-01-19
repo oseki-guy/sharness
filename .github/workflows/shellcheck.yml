@@ -33,7 +33,7 @@ jobs:
 
       - name: Run differential shellcheck
         id: shellcheck
-        uses: redhat-plumbers-in-action/differential-shellcheck@v4
+        uses: redhat-plumbers-in-action/differential-shellcheck@v3
         # with:
         # token: ${{ secrets.GITHUB_TOKEN }}
 
