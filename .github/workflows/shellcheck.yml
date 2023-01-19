@@ -34,9 +34,8 @@ jobs:
       - name: Run differential shellcheck
         id: shellcheck
         uses: redhat-plumbers-in-action/differential-shellcheck@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-base: d15102aaca60e27f82554e97aa4e467d1bb5be42
+        # with:
+        # token: ${{ secrets.GITHUB_TOKEN }}
 
       - if: ${{ always() }}
         name: Upload artifact with ShellCheck defects in SARIF format
@@ -44,7 +43,6 @@ jobs:
         with:
           name: Differential ShellCheck SARIF
           path: ${{ steps.ShellCheck.outputs.sarif }}
-
 
       - if: ${{ always() }}
         name: Upload analysis results to GitHub
